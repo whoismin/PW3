@@ -1,0 +1,179 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "vLibras",
+    "version": "v1",
+    "description": "A Suíte VLibras consiste em um conjunto de ferramentas computacionais de código aberto, responsável por traduzir conteúdos digitais (texto, áudio e vídeo) para a Língua Brasileira de Sinais - LIBRAS, tornando computadores, dispositivos móveis e plataformas Web acessíveis para pessoas surdas."
+  },
+  "paths": {
+    "/signs": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Lista de sinais do dicionário de Libras",
+        "description": "Retorna a lista de sinais do dicionário de Libras codificada numa trie em formato json",
+        "x-auth-type": "None",
+        "x-throttling-tier": "Unlimited"
+      }
+    },
+    "/translate": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Traduz de português para glosa em Libras",
+        "description": "Recebe um conteúdo de texto em português brasileiro na requisição, e retorna a glosa referente ao texto submetido",
+        "parameters": [
+          {
+            "name": "text",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": "Texto a ser traduzido para glosa"
+          }
+        ],
+        "x-auth-type": "None",
+        "x-throttling-tier": "Unlimited"
+      }
+    },
+    "/video": {
+      "post": {
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "parameters": [
+          {
+            "in": "formData",
+            "name": "gloss",
+            "description": "Request Body",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Requer geração de vídeo a partir da glosa em Libras",
+        "description": "Recebe um conteúdo de texto em glosa, e retorna o id da requisição que está sendo processada",
+        "x-auth-type": "None",
+        "x-throttling-tier": "Unlimited"
+      }
+    },
+    "/video/status/{id}": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Estado da geração do vídeo",
+        "description": "Recebe o id de uma requisição, e retorna algumas informações sobre o processamento da requisição: (1) status; (2) Nome do arquivo, se gerado; (3) Tamanho em bytes do arquivo, se gerado.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Identificador do vídeo de libras"
+          }
+        ],
+        "x-auth-type": "None",
+        "x-throttling-tier": "Unlimited"
+      }
+    },
+    "/video/{id}": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Retorna o arquivo de vídeo gerado",
+        "description": "Recebe o id do vídeo de libras e retorna o arquivo gerado pelo serviço de tradução",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Identificador do vídeo de libras"
+          }
+        ],
+        "x-auth-type": "None",
+        "x-throttling-tier": "Unlimited"
+      }
+    },
+    "/{platforma}/{sinal}": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Retorna animação compatível com o player Unity especificado",
+        "description": "Retorna o arquivo binário da animação de libras compatível com o player do unity para a plataforma especificada",
+        "parameters": [
+          {
+            "name": "platforma",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Plataforma pretendida (ANDROID, IOS, STANDALONE, WEBGL)"
+          },
+          {
+            "name": "sinal",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Palavra em glosa de Libras (Ex.: ACENAR, PESSOA)"
+          }
+        ],
+        "x-auth-type": "None",
+        "x-throttling-tier": "Unlimited"
+      }
+    },
+    "/{platforma}/{UF}/{sinal}": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Retorna animação compatível com o player Unity especificado",
+        "description": "Retorna o arquivo binário da animação de libras compatível com o player do unity para a plataforma, e UF(sinal regionalizado) especificados",
+        "parameters": [
+          {
+            "name": "platforma",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Plataforma pretendida (ANDROID, IOS, STANDALONE, WEBGL)"
+          },
+          {
+            "name": "UF",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Unidade Federativa para sinal regionalizado(caso houver)"
+          },
+          {
+            "name": "sinal",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Palavra em glosa de Libras (Ex.: ACENAR, PESSOA)"
+          }
+        ],
+        "x-auth-type": "None",
+        "x-throttling-tier": "Unlimited"
+      }
+    }
+  }
+}
